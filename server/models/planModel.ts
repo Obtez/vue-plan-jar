@@ -10,8 +10,7 @@ const planSchema = new Schema({
     required: true,
   },
   createdBy: {
-    type: Schema.Types.ObjectId,
-    ref: 'User',
+    type: String,
     required: true,
   },
 });
