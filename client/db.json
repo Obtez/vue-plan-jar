@@ -1,0 +1,16 @@
+{
+  "plans": [
+    {
+      "title": "Visit Technorama",
+      "description": "Do an all-day tour of the Technorama in Winterthur.",
+      "createdBy": "Hedgey",
+      "id": 1
+    },
+    {
+      "title": "Rapperswil Bridge",
+      "description": "Walk across the Rapperswil bridge. Don't forget to do some snacking there as well.",
+      "createdBy": "Duckie",
+      "id": 2
+    }
+  ]
+}
