@@ -5,17 +5,36 @@
       <p> {{ plan.description }} </p>
       <small> {{plan.createdBy}} </small>
     </div>
-      <i class="fas fa-times" @click="$emit('delete-plan', plan.id)"></i>
+      <i class="fas fa-times" @click="deletePlan"></i>
   </li>
 </template>
 
 <script lang="ts">
+import { ObjectId } from 'mongoose';
 import { defineComponent } from 'vue';
+
+interface Plan {
+  _id: ObjectId;
+  title: string;
+  description: string;
+  createdBy: string;
+}
 
 export default defineComponent({
   name: 'Plan',
   props: {
     plan: Object,
+  },
+  methods: {
+    deletePlan(plan: Plan) {
+      const planData = this.plan;
+      if (planData) {
+        const { _id } = planData;
+        this.$emit('delete-plan', _id);
+      } else {
+        console.log('No plan data');
+      }
+    },
   },
 });
 </script>

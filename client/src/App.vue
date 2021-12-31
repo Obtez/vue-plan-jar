@@ -3,18 +3,21 @@
     <router-link to="/">Home</router-link> |
     <router-link to="/about">About</router-link>
   </div> -->
-  <AddPlan @add-plan="addPlan" />
-  <Plans @delete-plan="deletePlan" v-show="!loading" :plans="plans" />
-  <router-view/>
+  <main>
+    <AddPlan @add-plan="addPlan" />
+    <Plans @delete-plan="deletePlan" v-show="!loading" :plans="plans" />
+  </main>
+  <!-- <router-view /> -->
 </template>
 
 <script lang="ts">
+import { ObjectId } from 'mongoose';
 import { defineComponent } from 'vue';
 import Plans from '@/components/Plans.vue';
 import AddPlan from '@/components/AddPlan.vue';
 
 interface Plan {
-  id: number;
+  _id: ObjectId;
   title: string;
   description: string;
   createdBy: string;
@@ -39,14 +42,14 @@ export default defineComponent({
   },
   methods: {
     async fetchPlans(): Promise<Plan[]> {
-      const res = await fetch('/api/plans');
+      const res = await fetch('http://localhost:5020/api/plans');
       const data = await res.json();
 
       return data;
     },
 
     async addPlan(plan: Plan) : Promise<void> {
-      const res = await fetch('/api/plans', {
+      const res = await fetch('http://localhost:5020/api/plans', {
         method: 'POST',
         headers: {
           'Content-type': 'application/json',
@@ -62,13 +65,17 @@ export default defineComponent({
       }
     },
 
-    async deletePlan(id: number): Promise<void> {
-      const res = await fetch(`/api/plans/${id}`, {
+    async deletePlan(id: ObjectId): Promise<void> {
+      console.log(id);
+      const res = await fetch(`http://localhost:5020/api/plans/${id}`, {
         method: 'DELETE',
       });
 
       if (res.status === 200) {
-        const updPlans = this.plans.filter((plan: Plan) => plan.id !== id);
+        const updPlans = this.plans.filter((plan: Plan) => {
+          const { _id } = plan;
+          return _id !== id;
+        });
         this.plans = [...updPlans];
       }
     },

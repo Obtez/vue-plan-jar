@@ -1,7 +1,7 @@
 <template>
   <ul class="plan-list">
-    <div :key="plan.id" v-for="plan in plans">
-      <Plan @delete-plan="$emit('delete-plan', plan.id)" :plan="plan" />
+    <div :key="plan._id" v-for="plan in plans">
+      <Plan @delete-plan="$emit('delete-plan', plan_id)" :plan="plan" />
     </div>
   </ul>
 </template>
